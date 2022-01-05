@@ -1,4 +1,4 @@
-# chrome_dino
+#chrome_dino
 AI dino
 
 ![image](dino_screen.png)
