@@ -17,7 +17,3 @@ dino_screen = ImageGrab.grab(bbox=dino_bbox)
 #Save the screen shot
 dino_screen.save('dino_screen.png')
 
-print(windows)
-img = ImageGrab.grab()
-#save the image
-img.save('screen.png')
