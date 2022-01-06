@@ -29,18 +29,17 @@ elif sys.platform in ['linux', 'linux2']:
         print('Please install Wnck')
         Wnck = None
     if Wnck is not None:
-        for i in range(100):
-            screen = Wnck.Screen.get_default()
-            screen.force_update()
-            windows = screen.get_windows()
-            for window in windows:
-                if window.get_name() == 'chrome://dino/ - Google Chrome':
-                    x1,y1,width,height = window.get_geometry()
-                    x2 = x1 + width
-                    y2 = y1 + height
-                    dino_bbox = (x1,y1,x2,y2)
-                    dino_screen = ImageGrab.grab(bbox=dino_bbox)
-                    image = f'screen_{i}.png'
-                    dino_screen.save(image)
-                    # os.remove(image)
-                    break
+        screen = Wnck.Screen.get_default()
+        screen.force_update()
+        windows = screen.get_windows()
+        for window in windows:
+            if window.get_name() == 'chrome://dino/ - Google Chrome':
+                x1,y1,width,height = window.get_geometry()
+                x2 = x1 + width
+                y2 = y1 + height
+                dino_bbox = (x1,y1,x2,y2)
+                dino_screen = ImageGrab.grab(bbox=dino_bbox)
+                image = f'screen_idx.png'
+                dino_screen.save(image)
+                # os.remove(image)
+                break
