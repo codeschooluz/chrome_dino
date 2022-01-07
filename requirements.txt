@@ -1,3 +1,4 @@
 pyautogui
 pygetwindow
 Pillow
+pgi
