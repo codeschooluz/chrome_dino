@@ -14,4 +14,4 @@ git clone https://github.com/codeschooluz/chrome_dino.git
   [how to contribute to open source](CONTRIBUTING.md)
 
 ## Screenshot
-![image](dino_screen.png)
+![image](https://user-images.githubusercontent.com/81753571/148671844-fc8ff66d-409a-410b-9585-306c09a32364.png)
