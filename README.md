@@ -8,7 +8,7 @@ git clone https://github.com/codeschooluz/chrome_dino.git
 - get screenshot
 ## Getting started
 
-## Installing
+### Installing
 ```bash
 pip install -r requirements.txt
 ```
