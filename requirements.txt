@@ -1,4 +1,4 @@
 pyautogui
 pygetwindow
 Pillow
-pgi
+# pgi
