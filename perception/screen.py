@@ -18,7 +18,26 @@ def screenGrab(window_name):
     #Get the window coordinates
     x1,y1,width,height = gw.getWindowGeometry(window_name)
     return x1,y1,width,height 
-    
+
+#Define the function to save the screenshot
+def screenSave(x1,y1,width,height,path):
+    """
+    Takes a screenshot from chrome window and saves it to the path
+    Parameters:
+        x1,y1,width,height: coordinates of the window
+        path: path to save the screenshot
+    Returns:
+        None
+    """
+    #get OS type 
+    os_type = sys.platform
+    #Take the screenshot
+    bbox = (x1,y1,x1+width,y1+height)
+    img = ImageGrab.grab(bbox=bbox)
+    #Save the screenshot
+    img.save(path)
+    return None
+
 fence_color = (83, 83, 83)
 
 if sys.platform in ['win32', 'win64', 'windows']:
