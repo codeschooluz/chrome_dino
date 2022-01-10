@@ -3,6 +3,22 @@ import pyautogui
 import sys
 import os
 
+#Define the function to take a screenshot
+def screenGrab(window_name):
+    """
+    Takes a screenshot from chrome window and retuns coordinates of window
+    Parameters:
+        window_name: name of the window to take screenshot
+    Returns:
+        x, y, width, height: coordinates of the window
+    """
+    #get OS type 
+    os_type = sys.platform
+    import pygetwindow as gw
+    #Get the window coordinates
+    x1,y1,width,height = gw.getWindowGeometry(window_name)
+    return x1,y1,width,height 
+    
 fence_color = (83, 83, 83)
 
 if sys.platform in ['win32', 'win64', 'windows']:
