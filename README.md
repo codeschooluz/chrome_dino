@@ -9,7 +9,9 @@ git clone https://github.com/codeschooluz/chrome_dino.git
 ## Getting started
 
 ### Installing
-
+```bash
+pip install -r requirements.txt
+```
 ## Contribute
   [how to contribute to open source](CONTRIBUTING.md)
 
