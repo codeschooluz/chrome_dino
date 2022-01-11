@@ -2,6 +2,8 @@ from PIL import ImageGrab
 import pyautogui
 import sys
 import os
+import cv2
+import numpy as np
 
 #Define the function to take a screenshot
 def screenGrab(window_name):
@@ -37,3 +39,27 @@ def screenSave(x1,y1,width,height,path):
     #Save the screenshot
     img.save(path)
     return None
+
+#Define the function to get area of the canvas
+def getCanvas():
+    """
+    Takes a screenshot from chrome window and saves it to the path
+    Parameters:
+        None
+    Returns:
+        x1,y1,width,height: coordinates of the window
+    """
+    #get OS type 
+    os_type = sys.platform
+    #Take the screenshot
+    bbox = (0,0,1920,1080)
+    img = ImageGrab.grab(bbox=bbox)
+    #PIL to openCV
+    img = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
+    #Save the screenshot
+    cv2.imwrite('canvas.png',img)
+    #Save the screenshot
+    # img.save('canvas.png')
+    return None #x1,y1,width,height
+
+getCanvas()
