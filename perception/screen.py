@@ -54,13 +54,18 @@ def getCanvas():
     #Take the screenshot
     bbox = (0,0,1920,1080)
     img = ImageGrab.grab(bbox=bbox)
+    rgb_img = np.array(img)
     #PIL to openCV
-    img = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
-    #Convert to grayscale
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    img = cv2.cvtColor(rgb_img, cv2.COLOR_BGR2HSV)
+    # define range of white color in HSV
+    lower_white = np.array([0,0,0])
+    upper_white = np.array([0,0,255])
+    # Threshold the HSV image to get only white colors
+    mask = cv2.inRange(img, lower_white, upper_white)
 
     #Save the screenshot
-    cv2.imwrite('canvas.png',gray)
+    cv2.imwrite('mask.png',mask)
+    cv2.imwrite('screen.png',rgb_img)
     #Save the screenshot
     # img.save('canvas.png')
     return None #x1,y1,width,height
