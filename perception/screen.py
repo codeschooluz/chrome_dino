@@ -56,8 +56,11 @@ def getCanvas():
     img = ImageGrab.grab(bbox=bbox)
     #PIL to openCV
     img = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
+    #Convert to grayscale
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
     #Save the screenshot
-    cv2.imwrite('canvas.png',img)
+    cv2.imwrite('canvas.png',gray)
     #Save the screenshot
     # img.save('canvas.png')
     return None #x1,y1,width,height
