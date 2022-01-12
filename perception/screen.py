@@ -73,5 +73,5 @@ def getChromeArea(save=True):
         #Save the screenshot
         cv2.imwrite('img/mask.png',mask)
         cv2.imwrite('img/screen_bbox.png',rgb_img)
-    return None #x1,y1,width,height
+    return x,y,w,h
 getChromeArea()
