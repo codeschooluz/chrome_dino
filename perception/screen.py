@@ -41,7 +41,7 @@ def screenSave(x1,y1,width,height,path):
     return None
 
 #Define the function to get area of the canvas
-def getCanvas():
+def getChromeArea(save=True):
     """
     Takes a screenshot from chrome window and saves it to the path
     Parameters:
@@ -49,17 +49,29 @@ def getCanvas():
     Returns:
         x1,y1,width,height: coordinates of the window
     """
-    #get OS type 
-    os_type = sys.platform
     #Take the screenshot
-    bbox = (0,0,1920,1080)
-    img = ImageGrab.grab(bbox=bbox)
+    img = ImageGrab.grab()
+    rgb_img = np.array(img).astype(np.uint8)
     #PIL to openCV
-    img = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
-    #Save the screenshot
-    cv2.imwrite('canvas.png',img)
-    #Save the screenshot
-    # img.save('canvas.png')
-    return None #x1,y1,width,height
-
-getCanvas()
+    img = cv2.cvtColor(rgb_img, cv2.COLOR_BGR2HSV)
+    # define range of white color in HSV
+    lower_white = np.array([0,0,0])
+    upper_white = np.array([0,0,255])
+    # Threshold the HSV image to get only white colors
+    mask = cv2.inRange(img, lower_white, upper_white)
+    #Find the contours
+    contours, hierarchy = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    #Find the biggest contour
+    cnt = max(contours, key = lambda x: cv2.contourArea(x))
+    #Get the coordinates of the biggest contour
+    x,y,w,h = cv2.boundingRect(cnt)
+    if save:
+        #Save the screenshot        
+        cv2.imwrite('img/screen.png',rgb_img)
+        #Draw the rectangle on the image
+        cv2.rectangle(rgb_img,(x,y),(x+w,y+h),(0,0,255),4)
+        #Save the screenshot
+        cv2.imwrite('img/mask.png',mask)
+        cv2.imwrite('img/screen_bbox.png',rgb_img)
+    return x,y,w,h
+getChromeArea()

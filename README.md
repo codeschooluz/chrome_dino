@@ -16,4 +16,9 @@ pip install -r requirements.txt
   [how to contribute to open source](CONTRIBUTING.md)
 
 ## Screenshot
-![image](https://user-images.githubusercontent.com/81753571/148671844-fc8ff66d-409a-410b-9585-306c09a32364.png)
+### Screenshot of the chrome dino game
+![screenshot](img/screen.png)
+### Get mask image
+![mask](img/mask.png)
+### Bounding box of region of interest
+![screen_bbox](img/screen_bbox.png)
