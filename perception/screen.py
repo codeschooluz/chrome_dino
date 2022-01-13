@@ -65,6 +65,8 @@ def getChromeArea(save=True):
     cnt = max(contours, key = lambda x: cv2.contourArea(x))
     #Get the coordinates of the biggest contour
     x,y,w,h = cv2.boundingRect(cnt)
+    #Print the width and height of the canvas
+   
     if save:
         #Save the screenshot        
         cv2.imwrite('img/screen.png',rgb_img)
@@ -74,4 +76,58 @@ def getChromeArea(save=True):
         cv2.imwrite('img/mask.png',mask)
         cv2.imwrite('img/screen_bbox.png',rgb_img)
     return x,y,w,h
-getChromeArea()
+
+#Define the function to get the coordinates of the canvas
+def getCanvasArea(x,y,w,h):
+    """
+    Takes a chrome coordinates and returns the coordinates of the canvas
+    Parameters:
+        x,y,w,h: chrome coordinates
+    Returns:
+        x1,y1,width,height: coordinates of the canvas
+    """
+    #Define the bounding box of the canvas
+    x1 = x+5
+    y1 = y
+    x2 = x + w*0.01
+    y2 = y + h
+    
+    #Take the screenshot: x,y,w,h
+    img = ImageGrab.grab(bbox=(x1,y1,x2,y2))
+    #Convert img to numpy array
+    rgb_img = np.array(img).astype(np.uint8)
+    #PIL to openCV in grayscale
+    img = cv2.cvtColor(rgb_img, cv2.COLOR_BGR2GRAY)
+    #Threshold the image
+    ret,thresh = cv2.threshold(img,127,255,0)
+    zero=np.zeros_like(thresh[0])
+    h=np.where((thresh==zero).all(axis=1))[0][0]
+    #Define the bounding box of the canvas
+    x1,y1,x2,y2 = x1,y1,x+w,y+h
+    #Take the screenshot
+    img = ImageGrab.grab(bbox=(x1,y1,x2,y2))
+    #Save the screenshot
+    img.save('img/canvas.png')
+
+   
+    #Save the threshold image
+    cv2.imwrite('img/thresh.png',thresh)
+
+    #Save the screenshot
+    # img.save('img/canvas.png')
+    
+    
+
+
+
+    # img = ImageGrab.grab()
+    # rgb_img = np.array(img).astype(np.uint8)
+    #Get the coordinates of the canvas
+    # x1,y1,width,height = x+w,y+h,w,h
+    return None #x1,y1,width,height
+    
+
+ 
+x,y,w,h=getChromeArea(False)
+#Get canvas
+getCanvasArea(x,y,w,h)
