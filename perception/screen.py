@@ -106,12 +106,8 @@ def getCanvasArea(x,y,w,h):
     #Define the offset of height
     offset = 15
     x1,y1,x2,y2 = x1,y1,x+w,y+h+offset
-    #Take the screenshot
-    img = ImageGrab.grab(bbox=(x1,y1,x2,y2))
-    #Convert img to numpy array
-    rgb_img = np.array(img).astype(np.uint8)
     #PIL to openCV in grayscale
-    img = cv2.cvtColor(rgb_img, cv2.COLOR_BGR2GRAY)
+    # img = cv2.cvtColor(rgb_img, cv2.COLOR_BGR2GRAY)
     #Imshow the image
       
    
@@ -119,20 +115,4 @@ def getCanvasArea(x,y,w,h):
 
 
    
-    return img 
-    
-#Define the loop for the game
-while True:
-    
-    x,y,w,h=getChromeArea(False)
-    #Get canvas
-    img=getCanvasArea(x,y,w,h)
-    #Imshow the image
-    cv2.imshow('image',img)
-    #Wait for key press
-    k = cv2.waitKey(1) & 0xFF
-    print(k)
-    #If key is pressed
-    if k == 27:
-        #Break the loop
-        break
+    return x1,y1,x2,y2
