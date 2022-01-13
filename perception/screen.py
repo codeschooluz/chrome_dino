@@ -69,7 +69,7 @@ def getChromeArea(save=True):
         #Save the screenshot        
         cv2.imwrite('img/screen.png',rgb_img)
         #Draw the rectangle on the image
-        cv2.rectangle(rgb_img,(x,y),(x+w,y+h),(0,0,255),4)
+        cv2.rectangle(rgb_img,(x,y),(x+w,y+h),(0,255,0),4)
         #Save the screenshot
         cv2.imwrite('img/mask.png',mask)
         cv2.imwrite('img/screen_bbox.png',rgb_img)
