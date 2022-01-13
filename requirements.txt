@@ -2,4 +2,5 @@ pyautogui
 pygetwindow
 Pillow
 opencv-python
+numpy
 # pgi

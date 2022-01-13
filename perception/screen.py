@@ -55,7 +55,7 @@ def getChromeArea(save=True):
     #PIL to openCV
     img = cv2.cvtColor(rgb_img, cv2.COLOR_BGR2HSV)
     # define range of white color in HSV
-    lower_white = np.array([0,0,0])
+    lower_white = np.array([0,0,60])
     upper_white = np.array([0,0,255])
     # Threshold the HSV image to get only white colors
     mask = cv2.inRange(img, lower_white, upper_white)
