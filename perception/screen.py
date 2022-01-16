@@ -4,6 +4,7 @@ import sys
 import os
 import cv2
 import numpy as np
+import matplotlib.pyplot as plt
 
 #Define the function to take a screenshot
 def screenGrab(window_name):
@@ -87,32 +88,47 @@ def getCanvasArea(x,y,w,h):
         x1,y1,width,height: coordinates of the canvas
     """
     #Define the bounding box of the canvas
-    x1 = x + w*0.01
+    x1 = x
     y1 = y
-    x2 = x + w*0.01+5
+    x2 = x + w
     y2 = y + h
     
     #Take the screenshot: x,y,w,h
-    img = ImageGrab.grab(bbox=(x1,y1,x2,y2))
+    img = ImageGrab.grab()
     #Convert img to numpy array
-    rgb_img = np.array(img).astype(np.uint8)
-    #PIL to openCV in grayscale
-    img = cv2.cvtColor(rgb_img, cv2.COLOR_BGR2GRAY)
-    #Threshold the image
+    img = np.array(img).astype(np.uint8)
     ret,thresh = cv2.threshold(img,127,255,0)
-    zero=np.zeros_like(thresh[0])
-    h=np.where((thresh==zero).all(axis=1))[0][0]
-    #Define the bounding box of the canvas
-    #Define the offset of height
-    offset = 15
-    x1,y1,x2,y2 = x1,y1,x+w,y+h+offset
-    #PIL to openCV in grayscale
-    # img = cv2.cvtColor(rgb_img, cv2.COLOR_BGR2GRAY)
-    #Imshow the image
-      
-   
+    black = thresh.copy()
+    thresh[thresh==255] = 0
+    thresh[black == 0] = 255
+    thresh[:y,::,::] = 0
+    thresh[::,x+w//4:,::] = 0
+
+    return thresh
 
 
+def getDino(thresh_img):
+    """
+    Dino bbox cordinates
+    Parameters:
+        dino_bbox_img: image of the dino
+    Returns:
+        x,y,w,h: coordinates of the dino
+    """
+    def kernal(x,y):
+        k = np.ones((x,y),dtype=np.uint8)
+        return k
+    kernel_full=np.full((5,5),255)
+    morph = cv2.morphologyEx(thresh_img,cv2.MORPH_CLOSE,kernel_full)
+    morph = cv2.erode(morph,kernal(3,3))
 
-   
-    return x1,y1,x2,y2
+    morph = cv2.cvtColor(morph,cv2.cv2.COLOR_BGR2GRAY)
+    contours,_ =cv2.findContours(morph,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
+    area_list = []
+    for i in range(len(contours)):
+        area_list.append(cv2.contourArea(contours[i]))
+    area_list = np.array(area_list)
+    mx_idx = area_list.argmax()
+    x,y,w,h = cv2.boundingRect(contours[mx_idx])
+    
+    return x, y, w, h
